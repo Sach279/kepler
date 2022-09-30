@@ -1,0 +1,59 @@
+import RPi.GPIO as GPIO
+import time
+from time import sleep
+import numpy as np
+import os
+
+GPIO.setwarnings(False)
+
+i=0
+y=0
+
+in1 = 18
+in2 = 23
+in3 = 24
+in4 = 25
+
+z = np.array([[0,0,1,1],
+              [0,0,0,1],
+              [1,0,0,1],
+              [1,0,0,0],
+              [1,1,0,0],
+              [0,1,0,0],
+              [0,1,1,0],
+              [0,0,1,0]])
+
+inpin = [in1,in2,in3,in4]
+delay = 0.0001
+
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(in1,GPIO.OUT)
+GPIO.setup(in2,GPIO.OUT)
+GPIO.setup(in3,GPIO.OUT)
+GPIO.setup(in4,GPIO.OUT)
+
+while True:
+
+        angle = input('needed angle: ')
+        #print(z)
+        if int(angle) <= 0:
+                angle = -1*int(angle)
+                dir = z[::-1]
+                #print(z)
+        else:
+                dir = z
+
+        step = int((512*int(angle))/360)
+
+        for x in range(step):
+                for i in range(8):
+                        for y in range(4):
+                                value = dir[i,y]
+                                if value == 1:
+                                        val = GPIO.HIGH
+                                else:
+                                        val = GPIO.LOW
+                                GPIO.output(inpin[y], val)
+                                time.sleep(delay)
+		ksdjfns
