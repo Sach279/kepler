@@ -56,4 +56,4 @@ while True:
                                         val = GPIO.LOW
                                 GPIO.output(inpin[y], val)
                                 time.sleep(delay)
-		ksdjfns
+
